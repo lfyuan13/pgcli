@@ -92,7 +92,7 @@ def cli(database, user, password, host, port):
             key_binding_factories=[emacs_bindings, pgcli_bindings])
 
     try:
-        while True:
+        while True:  # enter the input-output, wait for user input
             cli.layout.before_input = DefaultPrompt('%s> ' % pgexecute.dbname)
             document = cli.read_input(on_exit=AbortAction.RAISE_EXCEPTION)
 
@@ -103,7 +103,7 @@ def cli(database, user, password, host, port):
                 raise Exit
             try:
                 _logger.debug('sql: %r', document.text)
-                res = pgexecute.run(document.text)
+                res = pgexecute.run(document.text)  # pgexecute object will run the sql
                 output = []
                 for rows, headers, status in res:
                     _logger.debug("headers: %r", headers)
